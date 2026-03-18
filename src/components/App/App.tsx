@@ -4,6 +4,9 @@ import { fetchPhotos } from '../../services/photos';
 import Form from '../Form/Form';
 import PhotosGallery from '../PhotosGallery/PhotosGallery';
 import Container from '../ui/Container/Container';
+import Loader from '../Loader/Loader';
+import Text from '../ui/Text/Text';
+import Modal from '../Modal/Modal';
 
 export default function App() {
   const [query, setQuery] = useState('');
@@ -44,8 +47,19 @@ export default function App() {
       <Container>
         <Form onSubmit={handleSearch} />
 
+        {isLoading && <Loader />}
+
+        {isError && !isLoading && (
+          <Text align="center">Something went wrong. Please try again.</Text>
+        )}
         {photos.length > 0 && (
           <PhotosGallery photos={photos} onSelect={setSelectedPhoto} />
+        )}
+
+        {selectedPhoto && (
+          <Modal onClose={() => setSelectedPhoto(null)}>
+            <img src={selectedPhoto.src.original} alt={selectedPhoto.alt} />
+          </Modal>
         )}
       </Container>
     </div>
