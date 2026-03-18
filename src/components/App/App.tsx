@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Photo } from '../../types/photo';
+import Form from '../Form/Form';
 
 export default function App() {
   const [query, setQuery] = useState('');
@@ -8,5 +9,14 @@ export default function App() {
   const [isError, setIsError] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
-  return <div>App</div>;
+  const handleSearch = (query: string) => {
+    setQuery(query);
+    setPhotos([]);
+  };
+
+  return (
+    <div>
+      <Form onSubmit={handleSearch} />
+    </div>
+  );
 }
