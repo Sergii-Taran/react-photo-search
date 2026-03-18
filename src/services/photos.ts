@@ -17,7 +17,7 @@ export const fetchPhotos = async (query: string): Promise<Photo[]> => {
   const res = await axios.get<PexelsResponse>('search', {
     params: {
       query,
-      per_page: 12,
+      per_page: 15,
     },
   });
 
