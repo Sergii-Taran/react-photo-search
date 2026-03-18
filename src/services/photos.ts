@@ -9,17 +9,43 @@ axios.defaults.params = {
   orientation: 'landscape',
 };
 
+// interface PexelsResponse {
+//   photos: Photo[];
+// }
+
+// export const fetchPhotos = async (query: string): Promise<Photo[]> => {
+//   const res = await axios.get<PexelsResponse>('search', {
+//     params: {
+//       query,
+//       per_page: 15,
+//     },
+//   });
+
+//   return res.data.photos;
+// };
+
 interface PexelsResponse {
   photos: Photo[];
+  total_results: number;
+  per_page: number;
 }
 
-export const fetchPhotos = async (query: string): Promise<Photo[]> => {
+export const fetchPhotos = async (
+  query: string,
+  page: number
+): Promise<{ photos: Photo[]; totalPages: number }> => {
   const res = await axios.get<PexelsResponse>('search', {
     params: {
       query,
       per_page: 15,
+      page,
     },
   });
 
-  return res.data.photos;
+  const totalPages = Math.ceil(res.data.total_results / res.data.per_page);
+
+  return {
+    photos: res.data.photos,
+    totalPages,
+  };
 };
