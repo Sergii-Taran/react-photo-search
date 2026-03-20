@@ -1,73 +1,107 @@
-# React + TypeScript + Vite
+📸 React Photo Search App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application for searching and viewing high-quality photos using the Pexels API.
 
-Currently, two official plugins are available:
+🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+https://react-photo-search-six.vercel.app/
 
-## React Compiler
+✨ Features
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+🔍 Search photos by keyword
+🖼 Responsive photo gallery
+🔎 Modal with full-size image preview
+⏳ Loading indicator (spinner)
+❌ Error handling
+🔢 Pagination with smooth scrolling
+⚡ Fast API requests with Axios
+🎯 Clean and scalable architecture
 
-## Expanding the ESLint configuration
+🛠 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+React + TypeScript
+Vite
+Axios
+React Paginate
+React Spinners
+CSS Modules
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+📂 Project Structure
+src/
+├── components/
+│ ├── App/
+│ ├── Form/
+│ ├── PhotosGallery/
+│ ├── PhotosGalleryItem/
+│ ├── Modal/
+│ ├── Loader/
+│ ├── Pagination/
+│ └── ui/
+│ ├── Container/
+│ ├── Grid/
+│ ├── GridItem/
+│ ├── Section/
+│ └── Text/
+│
+├── services/
+│ └── photos.ts
+│
+├── types/
+│ └── photo.ts
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+⚙️ Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Clone the repository
+   git clone https://github.com/your-username/react-photo-search.git
+   cd react-photo-search
+2. Install dependencies
+   npm install
+3. Setup environment variables
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Create a .env file in the root directory:
+VITE_PEXELS_API_KEY=your_api_key_here
+⚠️ Never commit your API key to GitHub
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+4. Run the project
+   npm run dev
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+🧠 Key Implementation Details
+
+Form handling uses modern React Form Actions API (action instead of onSubmit)
+Pagination is fully controlled using forcePage
+Modal is implemented via createPortal with:
+ESC key closing
+backdrop click handling
+body scroll lock
+
+API layer is separated into a service (photos.ts)
+State management handled via React hooks
+
+🎯 UX Improvements
+
+Smooth scroll to top on page change
+Disabled pagination during loading
+Input validation (empty query prevention)
+Auto-reset search input after submit
+
+📸 API
+
+This project uses the Pexels API for fetching images.
+
+📦 Future Improvements
+
+🔄 Infinite scroll
+⚡ Debounced search
+🌐 URL query sync
+🖼 Skeleton loaders
+❤️ Favorites system
+
+👨‍💻 Author
+
+Serhii Taran
+
+Frontend Developer (React / FullStack in progress)
+
+⭐️ Show your support
+
+Give a ⭐️ if you like this project!
