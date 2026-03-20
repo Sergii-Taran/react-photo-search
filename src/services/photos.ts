@@ -9,21 +9,6 @@ axios.defaults.params = {
   orientation: 'landscape',
 };
 
-// interface PexelsResponse {
-//   photos: Photo[];
-// }
-
-// export const fetchPhotos = async (query: string): Promise<Photo[]> => {
-//   const res = await axios.get<PexelsResponse>('search', {
-//     params: {
-//       query,
-//       per_page: 15,
-//     },
-//   });
-
-//   return res.data.photos;
-// };
-
 interface PexelsResponse {
   photos: Photo[];
   total_results: number;

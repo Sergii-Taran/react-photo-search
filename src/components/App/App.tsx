@@ -9,8 +9,7 @@ import Loader from '../Loader/Loader';
 import Modal from '../Modal/Modal';
 import Text from '../ui/Text/Text';
 import Section from '../ui/Section/Section';
-
-import ReactPaginate from 'react-paginate';
+import Pagination from '../Pagination/Pagination';
 
 export default function App() {
   const [query, setQuery] = useState('');
@@ -31,7 +30,6 @@ export default function App() {
     setPhotos([]);
     setPage(1);
 
-    // плавний скрол вгору
     setTimeout(() => {
       topRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
@@ -48,7 +46,7 @@ export default function App() {
 
         const { photos: data, totalPages } = await fetchPhotos(query, page);
 
-        setPhotos(data); // ⚠️ для paginate — замінюємо
+        setPhotos(data);
         setTotalPages(totalPages);
       } catch (error) {
         console.error(error);
@@ -71,56 +69,49 @@ export default function App() {
   }, [page]);
 
   return (
-    <div>
+    <main>
       <Container>
         {/* anchor для скролу */}
         <div ref={topRef}></div>
 
+        {/* 🔍 SEARCH */}
         <Section>
           <Form onSubmit={handleSearch} />
         </Section>
 
         {/* 🖼 CONTENT */}
         <Section>
-          {/* Loader */}
-          {isLoading && <Loader />}
+          {isLoading && photos.length === 0 && <Loader />}
 
-          {/* Error */}
           {isError && !isLoading && (
             <Text align="center">Something went wrong. Please try again.</Text>
           )}
 
-          {/* Gallery */}
           {photos.length > 0 && (
             <PhotosGallery photos={photos} onSelect={setSelectedPhoto} />
           )}
         </Section>
 
-        {/* Pagination */}
-        {totalPages > 1 && !isLoading && (
-          <Section>
-            <ReactPaginate
-              pageCount={totalPages}
-              pageRangeDisplayed={3}
-              marginPagesDisplayed={1}
-              onPageChange={(event) => {
-                if (isLoading) return;
-                setPage(event.selected + 1);
-              }}
-              forcePage={page - 1}
-              containerClassName={`pagination ${isLoading ? 'disabled' : ''}`}
-              activeClassName="active"
-            />
-          </Section>
-        )}
+        {/* 🔢 PAGINATION */}
+        <Section>
+          <Pagination
+            totalPages={totalPages}
+            currentPage={page}
+            isLoading={isLoading}
+            onPageChange={setPage}
+          />
+        </Section>
 
-        {/* Modal */}
+        {/* 🪟 MODAL */}
         {selectedPhoto && (
           <Modal onClose={() => setSelectedPhoto(null)}>
-            <img src={selectedPhoto.src.original} alt={selectedPhoto.alt} />
+            <img
+              src={selectedPhoto.src.original}
+              alt={selectedPhoto.alt || 'Photo'}
+            />
           </Modal>
         )}
       </Container>
-    </div>
+    </main>
   );
 }

@@ -1,4 +1,5 @@
 import { FiSearch } from 'react-icons/fi';
+import { useRef } from 'react';
 import style from './Form.module.css';
 
 interface FormProps {
@@ -6,6 +7,8 @@ interface FormProps {
 }
 
 export default function Form({ onSubmit }: FormProps) {
+  const formRef = useRef<HTMLFormElement | null>(null);
+
   const handleAction = (formData: FormData) => {
     const value = formData.get('search');
 
@@ -16,10 +19,12 @@ export default function Form({ onSubmit }: FormProps) {
     if (!query) return;
 
     onSubmit(query);
+
+    formRef.current?.reset();
   };
 
   return (
-    <form className={style.form} action={handleAction}>
+    <form ref={formRef} className={style.form} action={handleAction}>
       <input
         className={style.input}
         placeholder="What do you want to write?"
